@@ -13,7 +13,7 @@ export const TodoListFilters = () => {
       <div className="font-bold text-xl">Filter</div>
 
       <div className="">
-        <select className="bg-gray-200 h-16" value={filter} onChange={updateFilter}>
+        <select className="bg-gray-200 h-16 cursor-pointer" value={filter} onChange={updateFilter}>
           <option value="Show All">All</option>
           <option value="Show Completed">Completed</option>
           <option value="Show Uncompleted">Uncompleted</option>
