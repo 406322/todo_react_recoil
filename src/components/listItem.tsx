@@ -2,6 +2,9 @@ import { useRecoilState } from "recoil";
 import { todoListState } from "../state/recoil/atoms"
 import { Todo } from "../models/todo";
 import { useNavigate } from 'react-router-dom';
+import { TiDeleteOutline } from 'react-icons/ti';
+import { GrEdit } from 'react-icons/gr';
+
 
 export const ListItem = ({ props }: { props: Todo }): JSX.Element => {
   let navigate = useNavigate();
@@ -30,49 +33,33 @@ export const ListItem = ({ props }: { props: Todo }): JSX.Element => {
   };
 
   return (
-    <div className="m-5 p-5 rounded-md bg-gray-200">
-      <p className="font-bold text-black mb-3 text-center">
-        {props.title} <br />
-      </p>
-      <p className="font-normal text-black mb-3 text-center">
-        {props.description}
-      </p>
+    <div className=" flex justify-between m-5 p-5 rounded-md bg-gray-200">
 
-      <button
-        type="button"
-        onClick={() => handleDelete()}
-        className="focus:outline-none w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-      >
-        Delete
-      </button>
+      <div className="flex gap-3">
+        <input
+          type="checkbox"
+          checked={props.isComplete}
+          className="w-7 h-7 cursor-pointer"
+          onChange={handleToggleComplete}
+        />
 
-      <button
-        type="button"
-        onClick={() => handleEdit()}
-        className="focus:outline-none w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-      >
-        Edit
-      </button>
+        <p className="font-normal text-black mb-3 text-center">
+          {props.description}
+        </p>
+      </div>
 
-      {props.isComplete && (
-        <button
-          type="button"
-          onClick={() => handleToggleComplete()}
-          className="focus:outline-none w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-        >
-          Toggle Not Complete
-        </button>
-      )}
+      <div className="flex gap-3">
+        <TiDeleteOutline
+          className="w-7 h-7 cursor-pointer"
+          onClick={() => handleDelete()}
+        />
 
-      {!props.isComplete && (
-        <button
-          type="button"
-          onClick={() => handleToggleComplete()}
-          className="focus:outline-none w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 "
-        >
-          Toggle Complete
-        </button>
-      )}
+        <GrEdit
+          className="w-7 h-7 cursor-pointer"
+          onClick={() => handleEdit()}
+        />
+      </div>
+
     </div>
   );
 };

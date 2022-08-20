@@ -18,7 +18,6 @@ export const Edit = () => {
   const thisTodo = filtered[0];
 
   const [formValue, setFormValue] = useState({
-    title: "",
     description: "",
     id: "",
   } as Todo);
@@ -39,7 +38,6 @@ export const Edit = () => {
       todoList.map((todo: Todo) => {
         if (todo.id === todoId) {
           const tempTodo = { ...todo };
-          tempTodo.title = formValue.title;
           tempTodo.description = formValue.description;
           return tempTodo;
         }
@@ -58,14 +56,6 @@ export const Edit = () => {
     <div>
       <h1 className="text-center text-3xl font-bold">Edit Mode</h1>
       <form onSubmit={handleSubmit} className="m-5 p-5 rounded-md bg-gray-200">
-        <input
-          name="title"
-          type="text"
-          onChange={handleChange}
-          className="bg-gray-50 border border-gray-300 text-black text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mb-2"
-          placeholder={thisTodo.title}
-          required
-        />
 
         <input
           name="description"
