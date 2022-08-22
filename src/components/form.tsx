@@ -13,6 +13,7 @@ export const Form = () => {
     description: "",
     id: "",
     isComplete: false,
+    isEdit: false
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,6 +51,7 @@ export const Form = () => {
       />
 
       <GoDiffAdded
+        title="Add Todo"
         className="w-7 h-10 cursor-pointer"
       />
     </form>
