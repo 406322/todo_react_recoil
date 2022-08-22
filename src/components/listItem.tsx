@@ -12,14 +12,11 @@ export const ListItem = ({ props }: { props: Todo }) => {
 
   const [formValue, setFormValue] = useState({
     description: props.description,
-    id: props.id,
-    isComplete: props.isComplete,
-    isEdit: props.isEdit
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormValue((prevState: Todo) => {
+    setFormValue((prevState) => {
       return {
         ...prevState,
         [name]: value,
@@ -32,43 +29,23 @@ export const ListItem = ({ props }: { props: Todo }) => {
     setTodoList(newState);
   };
 
-  const toggleEdit = () => {
-    setTodoList(
-      todoList.map((todo: Todo) => {
-        if (todo.id === props.id) {
-          const tempTodo = { ...todo };
-          tempTodo.isEdit = !tempTodo.isEdit;
-          return tempTodo;
-        }
-        return todo;
-      })
-    );
-  }
-
   const handleEdit = (e: React.SyntheticEvent): void => {
     e.preventDefault();
     toggleEdit();
   };
 
   const handleSave = () => {
-    // console.log(todoList)
-    // console.log(formValue.description)
     setTodoList(
       todoList.map((todo: Todo) => {
         if (todo.id === props.id) {
           const tempTodo = { ...todo };
-          console.log(tempTodo)
           tempTodo.description = formValue.description;
           tempTodo.isEdit = !tempTodo.isEdit;
-          console.log(tempTodo)
           return tempTodo;
         }
         return todo;
       })
     );
-    // console.log(todoList)
-    // console.log(formValue.description)
-    //toggleEdit();
   }
 
   const handleToggleComplete = (): void => {
@@ -84,9 +61,24 @@ export const ListItem = ({ props }: { props: Todo }) => {
     );
   };
 
+  const toggleEdit = () => {
+    setTodoList(
+      todoList.map((todo: Todo) => {
+        if (todo.id === props.id) {
+          const tempTodo = { ...todo };
+          tempTodo.isEdit = !tempTodo.isEdit;
+          return tempTodo;
+        }
+        return todo;
+      })
+    );
+  }
+
   return (
     <>
-      <div className=" flex justify-between m-5 p-5 rounded-md bg-gray-200">
+      <form
+        onSubmit={handleSave}
+        className=" flex justify-between m-5 p-5 rounded-md bg-gray-200">
 
         <div className="flex gap-3">
           <input
@@ -97,28 +89,20 @@ export const ListItem = ({ props }: { props: Todo }) => {
           />
 
           {props.isEdit
-            ? <input type="text" name="description" onChange={handleChange} value={formValue.description}
-
-
+            ? <input
+              name="description"
+              type="text"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+              onChange={handleChange}
+              value={formValue.description}
             />
-            : <p className="font-normal text-black mb-3 text-center">
+            : <p
+              className="font-normal text-black mb-3 text-center">
               {props.description}
             </p>
           }
 
-          {/* <p className="font-normal text-black mb-3 text-center">
-            {props.description}
-          </p> */}
-
-
-
-
-
         </div>
-
-
-
-
 
         <div className="flex gap-3">
           <TiDeleteOutline
@@ -129,6 +113,7 @@ export const ListItem = ({ props }: { props: Todo }) => {
 
           {props.isEdit
             ? <BiSave
+              title="Save Todo"
               className="w-7 h-7 cursor-pointer"
               onClick={handleSave}
             />
@@ -140,14 +125,9 @@ export const ListItem = ({ props }: { props: Todo }) => {
             />
           }
 
-          {/* <GrEdit
-            title="Edit Todo"
-            className="w-7 h-7 cursor-pointer"
-            onClick={() => handleEdit()}
-          /> */}
         </div>
 
-      </div>
+      </form>
     </>
   );
 };
